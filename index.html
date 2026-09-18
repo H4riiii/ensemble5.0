@@ -3,438 +3,1098 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ensemble 4.0 - Registration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>Ensemble 5.0 - Food Coupon & Verification Portal</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- QRCode & HTML5-QRCode Scanner Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #e84393 0%, #6c5ce7 50%, #00cec9 100%);
+            --accent-pink: #e84393;
+            --accent-purple: #a29bfe;
+            --accent-cyan: #00cec9;
+            --accent-green: #00b894;
+            --accent-red: #d63031;
+            --dark-card: rgba(15, 23, 42, 0.92);
+            --border-glass: rgba(255, 255, 255, 0.12);
+        }
+
         body {
-            background: linear-gradient(135deg, #e84393 0%, #a29bfe 50%, #74b9ff 100%);
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a162b 100%);
             min-height: 100vh;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Outfit', sans-serif;
+            color: #f1f2f6;
             margin: 0;
-            padding: 20px 0;
+            padding: 20px 0 60px;
         }
-        
-        .registration-container {
-            max-width: 500px;
-            margin: 2rem auto;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+
+        .main-card {
+            max-width: 580px;
+            margin: 1rem auto;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-glass);
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
         }
-        
-        .ieee-header {
+
+        /* Top Header */
+        .portal-header {
             text-align: center;
-            margin-bottom: 2rem;
-            color: white;
+            margin-bottom: 1.8rem;
         }
-        
-        .ieee-logo {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+
+        .ieee-logo-badge {
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #a29bfe;
+            background: rgba(162, 155, 254, 0.1);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(162, 155, 254, 0.2);
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
         }
-        
+
         .event-title {
-            font-size: clamp(2rem, 7vw, 3rem);
-            font-weight: bold;
-            background: linear-gradient(45deg, #e84393, #a29bfe, #74b9ff);
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fd79a8, #a29bfe, #00cec9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.5px;
         }
-        
+
         .event-subtitle {
-            color: #ddd;
-            font-size: 1rem;
-            margin-bottom: 1rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin: 0;
         }
-        
-        .event-details {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
+
+        /* Mode Selector Tabs */
+        .nav-volunteer-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
             margin-bottom: 2rem;
-            text-align: center;
-            color: white;
+            gap: 6px;
         }
-        
-        .form-control {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .form-control:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #74b9ff;
-            box-shadow: 0 0 0 0.2rem rgba(116, 185, 255, 0.25);
-            color: white;
-        }
-        
-        .form-label {
-            color: white;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-        
-        .btn-register {
-            background: linear-gradient(45deg, #e84393, #a29bfe);
+
+        .nav-volunteer-tab {
+            flex: 1;
+            padding: 10px 14px;
             border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            color: white;
+            background: transparent;
+            color: #94a3b8;
             font-weight: 600;
-            font-size: 1.1rem;
-            width: 100%;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        
-        .btn-register:hover {
-            background: linear-gradient(45deg, #fd79a8, #6c5ce7);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(232, 67, 147, 0.3);
-            color: white;
+
+        .nav-volunteer-tab.active {
+            background: linear-gradient(135deg, #e84393, #6c5ce7);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(232, 67, 147, 0.35);
         }
-        
-        .btn-register:disabled {
-            opacity: 0.7;
-            transform: none;
+
+        /* Form Inputs */
+        .form-label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 0.4rem;
         }
-        
-        .token-display {
-            display: none;
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
+
+        .required-star {
+            color: #fd79a8;
+        }
+
+        .form-control, .form-select {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: #00cec9;
+            box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.2);
+            color: #ffffff;
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+        /* Custom Radio Group */
+        .radio-pills {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .radio-pill-label {
+            display: block;
             text-align: center;
-            margin-top: 2rem;
-            animation: slideIn 0.5s ease-out;
+            padding: 10px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        
-        .token-code {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
+
+        .radio-pills input[type="radio"] {
+            display: none;
+        }
+
+        .radio-pills input[type="radio"]:checked + .radio-pill-label {
+            background: rgba(108, 92, 231, 0.25);
+            border-color: #a29bfe;
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 0 12px rgba(162, 155, 254, 0.25);
+        }
+
+        /* Primary Action Buttons */
+        .btn-action-primary {
+            background: linear-gradient(135deg, #e84393 0%, #6c5ce7 100%);
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.05rem;
+            width: 100%;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(232, 67, 147, 0.3);
+        }
+
+        .btn-action-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(232, 67, 147, 0.45);
+            color: white;
+        }
+
+        .btn-action-primary:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .btn-action-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: #f1f2f6;
+            padding: 0.75rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-action-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        /* Digital Ticket Confirmation */
+        .ticket-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid rgba(0, 206, 201, 0.4);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            animation: fadeInScale 0.35s ease-out;
+        }
+
+        .ticket-badge {
+            display: inline-block;
+            background: rgba(0, 184, 148, 0.15);
+            color: #00cec9;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .ticket-token {
+            font-size: 2.3rem;
+            font-weight: 800;
             letter-spacing: 3px;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px dashed rgba(0, 206, 201, 0.5);
+            padding: 0.7rem 1.5rem;
+            border-radius: 14px;
+            display: inline-block;
+            margin: 0.6rem 0;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        
-        @keyframes slideIn {
+
+        .ticket-token:hover {
+            background: rgba(0, 206, 201, 0.15);
+        }
+
+        .qr-wrapper {
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 16px;
+            display: inline-block;
+            margin: 1.2rem auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Verification Results Card */
+        .verify-result-card {
+            border-radius: 18px;
+            padding: 1.6rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        .verify-unclaimed {
+            background: rgba(0, 184, 148, 0.12);
+            border: 2px solid #00b894;
+        }
+
+        .verify-claimed {
+            background: rgba(214, 48, 49, 0.15);
+            border: 2px solid #d63031;
+        }
+
+        .verify-notfound {
+            background: rgba(253, 203, 110, 0.12);
+            border: 2px solid #fdcb6e;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .pill-green {
+            background: #00b894;
+            color: #ffffff;
+        }
+
+        .pill-red {
+            background: #d63031;
+            color: #ffffff;
+        }
+
+        .pill-yellow {
+            background: #fdcb6e;
+            color: #2d3436;
+        }
+
+        /* Camera Scanner Box */
+        #qr-reader {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        #qr-reader__scan_region {
+            border-radius: 12px;
+        }
+
+        /* Quick Settings & Status bar */
+        .config-badge {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .config-badge:hover {
+            color: #ffffff;
+        }
+
+        @keyframes fadeInScale {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: scale(0.96);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
-        }
-        
-        .loading-spinner {
-            display: none;
-        }
-        
-        .required-field {
-            color: #fd79a8;
-        }
-        
-        .alert-custom {
-            border-radius: 10px;
-            border: none;
-            margin-top: 1rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .ieee-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        
-        .exclusive-note {
-            text-align: center;
-            color: #fd79a8;
-            font-style: italic;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="registration-container position-relative">
-            
-            
-            <!-- Event Header -->
-            <div class="ieee-header">
-                <div class="ieee-logo">IEEE SCT SB PRESENTS</div>
-                <h1 class="event-title">Ensemble<span style="font-size: 0.6em;">4.0</span></h1>
-                <p class="event-subtitle">Celebrate. Connect. Empower.</p>
+
+<div class="container">
+    <div class="main-card">
+        
+        <!-- Header -->
+        <div class="portal-header">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="ieee-logo-badge"><i class="fas fa-bolt"></i> IEEE SCT SB</span>
+                <span class="config-badge" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                    <i class="fas fa-cog"></i> Backend Setup
+                </span>
             </div>
-            
-            <!-- Event Details -->
-            <div class="event-details">
-                <div class="row">
-                    <div class="col-6">
-                        <strong>9:30 AM</strong><br>
-                        <small>3rd AUG</small>
-                    </div>
-                    <div class="col-6">
-                        <strong>Seminar Hall (112)</strong><br>
-                        <small>Limited Slots</small>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="exclusive-note">
-                *Exclusive for IEEE Members
-            </div>
-            
+            <h1 class="event-title">Ensemble 5.0</h1>
+            <p class="event-subtitle">Official Volunteer Food Coupon & Verification Portal</p>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="nav-volunteer-tabs">
+            <button class="nav-volunteer-tab active" id="tabIssueBtn" onclick="switchTab('issue')">
+                <i class="fas fa-ticket-alt"></i> Issue Coupon
+            </button>
+            <button class="nav-volunteer-tab" id="tabVerifyBtn" onclick="switchTab('verify')">
+                <i class="fas fa-qrcode"></i> Scan & Verify
+            </button>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 1: ISSUE COUPON (REGISTRATION DESK)                       -->
+        <!-- ============================================================ -->
+        <div id="issueSection">
             <!-- Registration Form -->
-            <form id="gform" class="registration-form">
-                <div class="form-group">
-                    <label for="name" class="form-label">Full Name <span class="required-field">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+            <form id="couponForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Participant Full Name <span class="required-star">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Rahul Nair" required autocomplete="off">
                 </div>
-                
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address <span class="required-field">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address (QR Pass sent here) <span class="required-star">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="participant@example.com" required autocomplete="off">
                 </div>
-                
-                <div class="form-group">
-                    <label for="phone" class="form-label">Phone Number <span class="required-field">*</span></label>
-                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number <span class="required-star">*</span></label>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+91 98765 43210" required autocomplete="off">
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">IEEE Membership Status <span class="required-field">*</span></label>
-                    <div>
-                        <label style="color: rgb(151, 171, 221);">
-                            <input type="radio" name="membershipStatus" value="IEEE Member" required>
-                            IEEE Member
+
+                <div class="mb-3">
+                    <label class="form-label">IEEE Membership Status <span class="required-star">*</span></label>
+                    <div class="radio-pills">
+                        <label>
+                            <input type="radio" name="membershipStatus" value="IEEE Member" id="statusMember" onchange="toggleIeeeId(true)">
+                            <span class="radio-pill-label"><i class="fas fa-id-badge"></i> IEEE Member</span>
                         </label>
-                        &nbsp;&nbsp;
-                        <label style="color: rgb(151, 171, 221);">
-                            <input type="radio" name="membershipStatus" value="Non-IEEE Member" required>
-                            Non-IEEE Member
+                        <label>
+                            <input type="radio" name="membershipStatus" value="Non-IEEE Member" id="statusNonMember" checked onchange="toggleIeeeId(false)">
+                            <span class="radio-pill-label"><i class="fas fa-user"></i> Non-IEEE Member</span>
                         </label>
                     </div>
                 </div>
 
-                  <div class="form-group">
-                    <label for="ieeeId" class="form-label">IEEE Membership ID </label>
-                    <input type="text" class="form-control" id="ieeeId" name="ieeeId" placeholder="Your IEEE Member ID" required>
+                <!-- IEEE ID (Conditionally visible) -->
+                <div class="mb-4" id="ieeeIdContainer" style="display: none;">
+                    <label for="ieeeId" class="form-label">IEEE Membership ID <span class="required-star">*</span></label>
+                    <input type="text" class="form-control" id="ieeeId" name="ieeeId" placeholder="e.g. 98452134">
                 </div>
-                
-                
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-register">
-                    <span class="submit-text">Submit</span>
-                    <span class="loading-spinner">
-                        <i class="fas fa-spinner fa-spin"></i> Processing...
+                <button type="submit" class="btn btn-action-primary" id="btnSubmitCoupon">
+                    <span id="btnSubmitText"><i class="fas fa-check-circle"></i> Issue Food Coupon</span>
+                    <span id="btnSubmitSpinner" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Processing & Emailing QR...
                     </span>
                 </button>
-                
-                <div class="text-center mt-3">
-                    <small style="color: #ddd;">Honouring Legacy, Inspiring Growth.</small>
-                </div>
             </form>
+
+            <!-- Digital Ticket Card (Shown after successful issue) -->
+            <div id="ticketDisplay" style="display: none;" class="ticket-card mt-3">
+                <div class="ticket-badge"><i class="fas fa-check"></i> COUPON ISSUED</div>
+                <h4 class="text-white mb-1" id="ticketParticipantName">Participant Name</h4>
+                <p class="text-secondary small mb-2" id="ticketParticipantInfo">IEEE Member &bull; rahul@example.com</p>
+                
+                <div>
+                    <div class="ticket-token" id="ticketTokenCode" title="Click to copy" onclick="copyToken()">
+                        ES5-XXXX
+                    </div>
+                </div>
+                <div class="small text-muted mb-2"><i class="fas fa-copy"></i> Click token to copy</div>
+
+                <!-- QR Code Container -->
+                <div class="qr-wrapper">
+                    <div id="qrcodeCanvas"></div>
+                </div>
+
+                <div class="alert alert-success bg-dark border-success text-light small py-2 px-3 mb-4 rounded-3 text-start">
+                    <i class="fas fa-paper-plane text-success me-1"></i>
+                    <strong>Pass Emailed:</strong> A copy with this QR code has been emailed to the participant.
+                </div>
+
+                <!-- Fast Volunteer Workflow Button -->
+                <button type="button" class="btn btn-action-primary" onclick="resetForNextParticipant()">
+                    <i class="fas fa-plus-circle"></i> Issue Next Coupon (Enter)
+                </button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2: VERIFY & CLAIM (FOOD COUNTER)                         -->
+        <!-- ============================================================ -->
+        <div id="verifySection" style="display: none;">
             
-            <!-- Token Display (Hidden initially) -->
-            <div id="tokenDisplay" class="token-display">
-                <h3><i class="fas fa-check-circle"></i> Registration Confirmed!</h3>
-                <p>Welcome to Ensemble 4.0! Your event token:</p>
-                <div class="token-code" id="tokenCode">ES4XXX</div>
-                <div class="mt-3">
-                    <p><i class="fas fa-envelope"></i> Confirmation email sent!</p>
-                    <p><i class="fas fa-ticket-alt"></i> Take a screenshot of this Ticket</p>
-                   <button class="btn btn-light mt-2" onclick="window.open('https://chat.whatsapp.com/C5MDctuEYEM963J2OAYagK?mode=ac_t', '_blank')">
-                         <i class="bi bi-whatsapp"></i> Join WhatsApp Group
+            <!-- Quick Manual Lookup -->
+            <div class="mb-3">
+                <label for="manualTokenInput" class="form-label">Scan QR Code or Enter Token Code</label>
+                <div class="input-group">
+                    <input type="text" class="form-control text-uppercase" id="manualTokenInput" placeholder="e.g. ES5-1001" autocomplete="off">
+                    <button class="btn btn-action-primary" style="width: auto;" type="button" onclick="verifyManualToken()">
+                        <i class="fas fa-search"></i> Verify
                     </button>
                 </div>
             </div>
-            
-            <!-- Alert Messages -->
-            <div id="alertContainer"></div>
+
+            <!-- Live Camera Scanner Controls -->
+            <div class="text-center my-3">
+                <button class="btn btn-action-secondary mb-2" id="btnToggleScanner" onclick="toggleCameraScanner()">
+                    <i class="fas fa-camera"></i> <span id="cameraBtnText">Start Camera Scanner</span>
+                </button>
+                <div id="qr-reader" style="display: none;"></div>
+            </div>
+
+            <!-- Verification Status Output Card -->
+            <div id="verifyResultDisplay" style="display: none;">
+                <!-- Dynamically filled by JS -->
+            </div>
+        </div>
+
+        <!-- Global Alert Box -->
+        <div id="alertBox" class="mt-3"></div>
+
+    </div>
+</div>
+
+<!-- Settings Modal for Google Apps Script Web App URL -->
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="settingsModalLabel"><i class="fas fa-database"></i> Backend Configuration</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small text-secondary mb-3">
+                    Paste your deployed <strong>Google Apps Script Web App URL</strong> below. The URL is saved locally in this browser.
+                </p>
+                <div class="mb-3">
+                    <label for="apiUrlInput" class="form-label">Google Apps Script Web App URL</label>
+                    <div class="input-group">
+                        <input type="url" class="form-control" id="apiUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+                        <button class="btn btn-outline-info" type="button" id="btnTestConn" onclick="testConnection()">
+                            <i class="fas fa-plug"></i> Test Connection
+                        </button>
+                    </div>
+                    <div id="testConnResult" class="mt-2 small" style="display: none;"></div>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="demoModeSwitch">
+                    <label class="form-check-label small" for="demoModeSwitch">
+                        <strong>Test / Demo Mode</strong> (Simulate registrations & redemptions locally without Google Sheet)
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="saveSettings()">Save Configuration</button>
+            </div>
         </div>
     </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Configuration & State
+    const STORAGE_KEY_API_URL = "ENSEMBLE5_API_URL";
+    const STORAGE_KEY_DEMO_MODE = "ENSEMBLE5_DEMO_MODE";
     
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <script>
-        // Form submission handling
-        $("#gform").submit(function(e) {
-            e.preventDefault();
-            
-            // Show loading state
-            const submitButton = $(this).find('button[type="submit"]');
-            const submitText = submitButton.find('.submit-text');
-            const loadingSpinner = submitButton.find('.loading-spinner');
-            
-            submitText.hide();
-            loadingSpinner.show();
-            submitButton.prop('disabled', true);
-            
-            // Clear previous alerts
-            $('#alertContainer').empty();
-            
-            // Submit form
-            $.ajax({
-                url: "https://script.google.com/macros/s/AKfycbxkl0hUZh_Ikgcpg3dyG9edbqptIXF_Qh88eZ43J2W5awdCU6ibJ219zV6XxiYzx27JHQ/exec", // Replace with your actual script URL
-                data: $("#gform").serialize(),
-                method: "POST",
-                success: function(response) {
-                    console.log('Success response:', response);
-                    
-                    if (response.result === "success" && response.token) {
-                        // Show token
-                        $('#tokenCode').text(response.token);
-                        $('#tokenDisplay').slideDown();
-                        
-                        // Hide form
-                        $('.registration-form').slideUp();
-                        
-                        // Scroll to token
-                        $('html, body').animate({
-                            scrollTop: $('#tokenDisplay').offset().top - 100
-                        }, 500);
-                        
-                    } else {
-                        showAlert('warning', 'Registration completed but token not received. Please check your email.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    showAlert('danger', 'Registration failed. Please try again or contact IEEE SCT SB.');
-                },
-                complete: function() {
-                    // Reset button state
-                    submitText.show();
-                    loadingSpinner.hide();
-                    submitButton.prop('disabled', false);
-                }
-            });
-        });
+    // Default or stored API URL
+    let apiUrl = localStorage.getItem(STORAGE_KEY_API_URL) || "";
+    let isDemoMode = localStorage.getItem(STORAGE_KEY_DEMO_MODE) === "true";
+
+    // In-memory demo store for testing if backend is not yet linked
+    let demoStore = {
+        counter: 1001,
+        tokens: {
+            "ES5-1001": {
+                name: "Arjun Krishnan",
+                email: "arjun@example.com",
+                phone: "+91 98470 12345",
+                membershipStatus: "IEEE Member",
+                ieeeId: "98765432",
+                claimed: false,
+                claimedAt: null
+            }
+        }
+    };
+
+    let html5QrScanner = null;
+    let isScanning = false;
+
+    // Initialize UI on load
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("apiUrlInput").value = apiUrl;
+        document.getElementById("demoModeSwitch").checked = isDemoMode;
         
-        // Show alert messages
-        function showAlert(type, message) {
-            const alertHtml = `
-                <div class="alert alert-${type} alert-custom alert-dismissible fade show" role="alert">
-                    <i class="fas fa-${type === 'danger' ? 'exclamation-triangle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        // Auto-focus Name field
+        document.getElementById("name").focus();
+
+        if (!apiUrl && !isDemoMode) {
+            showAlert("info", "Welcome! Please configure your Google Apps Script URL in 'Backend Setup' or enable Demo Mode to test.");
+        }
+    });
+
+    // Validate Apps Script Web App URL format
+    function validateApiUrl(url) {
+        if (!url) return { valid: false, message: "URL cannot be empty." };
+        if (url.includes("/edit")) {
+            return { valid: false, message: "This is the editor URL! You must click Deploy > New deployment > Web app, and copy the URL ending in /exec." };
+        }
+        if (url.includes("/dev")) {
+            return { valid: false, message: "This is the /dev test URL. Please use the production /exec URL from Deploy > Manage deployments." };
+        }
+        if (!url.startsWith("https://script.google.com/macros/s/")) {
+            return { valid: false, message: "URL should start with https://script.google.com/macros/s/ and end with /exec." };
+        }
+        return { valid: true };
+    }
+
+    // Test Connection to Backend
+    async function testConnection() {
+        const urlInput = document.getElementById("apiUrlInput").value.trim();
+        const resultBox = document.getElementById("testConnResult");
+        const testBtn = document.getElementById("btnTestConn");
+        
+        resultBox.style.display = "block";
+        resultBox.innerHTML = '<span class="text-info"><i class="fas fa-spinner fa-spin"></i> Testing connection to Google Apps Script...</span>';
+        testBtn.disabled = true;
+
+        const validation = validateApiUrl(urlInput);
+        if (!validation.valid) {
+            resultBox.innerHTML = `<span class="text-warning"><i class="fas fa-exclamation-triangle"></i> ${validation.message}</span>`;
+            testBtn.disabled = false;
+            return;
+        }
+
+        try {
+            const res = await fetch(urlInput, { method: "GET", redirect: "follow" });
+            const data = await res.json();
+            if (data && data.status === "success") {
+                resultBox.innerHTML = `<span class="text-success fw-bold"><i class="fas fa-check-circle"></i> Connection successful! Backend is operational.</span>`;
+            } else {
+                resultBox.innerHTML = `<span class="text-warning"><i class="fas fa-info-circle"></i> Connected, received: ${JSON.stringify(data)}</span>`;
+            }
+        } catch (err) {
+            console.error("Test connection error:", err);
+            resultBox.innerHTML = `
+                <div class="text-danger">
+                    <div><i class="fas fa-times-circle"></i> <strong>Connection Failed:</strong> ${err.message || 'CORS / Network Error'}</div>
+                    <ul class="text-light small mt-1 ps-3 mb-0">
+                        <li>In Apps Script, did you set <strong>"Who has access" to "Anyone"</strong>?</li>
+                        <li>Did you select <strong>"Execute as: Me"</strong>?</li>
+                        <li>If you updated <code>Code.gs</code>, did you deploy a <strong>New version</strong>?</li>
+                    </ul>
                 </div>
             `;
-            $('#alertContainer').html(alertHtml);
+        } finally {
+            testBtn.disabled = false;
         }
-        
-        // Copy token to clipboard
-        function copyToken() {
-            const token = document.getElementById('tokenCode').textContent;
-            navigator.clipboard.writeText(token).then(function() {
-                showAlert('success', 'Token copied to clipboard!');
-            }).catch(function() {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = token;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showAlert('success', 'Token copied to clipboard!');
-            });
+    }
+
+    // Save Settings
+    function saveSettings() {
+        apiUrl = document.getElementById("apiUrlInput").value.trim();
+        isDemoMode = document.getElementById("demoModeSwitch").checked;
+
+        if (apiUrl) {
+            const validation = validateApiUrl(apiUrl);
+            if (!validation.valid) {
+                alert("Notice: " + validation.message);
+            }
         }
-        
-        // Form validation
-        $(document).ready(function() {
-            // Real-time validation
-            $('input[required]').on('blur', function() {
-                if (!this.value) {
-                    $(this).css('border-color', '#e17055');
+
+        localStorage.setItem(STORAGE_KEY_API_URL, apiUrl);
+        localStorage.setItem(STORAGE_KEY_DEMO_MODE, isDemoMode);
+
+        const modalEl = document.getElementById("settingsModal");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        showAlert("success", "Settings updated! " + (isDemoMode ? "[Demo Mode Active]" : "[Live Google Sheets Connected]"));
+    }
+
+    // Tab Switching
+    function switchTab(tab) {
+        const issueSection = document.getElementById("issueSection");
+        const verifySection = document.getElementById("verifySection");
+        const tabIssueBtn = document.getElementById("tabIssueBtn");
+        const tabVerifyBtn = document.getElementById("tabVerifyBtn");
+
+        if (tab === "issue") {
+            issueSection.style.display = "block";
+            verifySection.style.display = "none";
+            tabIssueBtn.classList.add("active");
+            tabVerifyBtn.classList.remove("active");
+            if (isScanning) stopCameraScanner();
+            document.getElementById("name").focus();
+        } else {
+            issueSection.style.display = "none";
+            verifySection.style.display = "block";
+            tabIssueBtn.classList.remove("active");
+            tabVerifyBtn.classList.add("active");
+            document.getElementById("manualTokenInput").focus();
+        }
+    }
+
+    // Toggle IEEE ID Field
+    function toggleIeeeId(isMember) {
+        const container = document.getElementById("ieeeIdContainer");
+        const ieeeInput = document.getElementById("ieeeId");
+        if (isMember) {
+            container.style.display = "block";
+            ieeeInput.required = true;
+            ieeeInput.focus();
+        } else {
+            container.style.display = "none";
+            ieeeInput.required = false;
+            ieeeInput.value = "";
+        }
+    }
+
+    // Phone Auto-Formatter
+    document.getElementById("phone").addEventListener("input", function() {
+        let digits = this.value.replace(/\D/g, "");
+        if (digits.length > 10) digits = digits.slice(0, 10);
+        if (digits.length === 10) {
+            this.value = "+91 " + digits.slice(0, 5) + " " + digits.slice(5);
+        }
+    });
+
+    // Form Submission: Issue Coupon
+    document.getElementById("couponForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById("btnSubmitCoupon");
+        const btnText = document.getElementById("btnSubmitText");
+        const btnSpinner = document.getElementById("btnSubmitSpinner");
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const isMember = document.getElementById("statusMember").checked;
+        const membershipStatus = isMember ? "IEEE Member" : "Non-IEEE Member";
+        const ieeeId = isMember ? document.getElementById("ieeeId").value.trim() : "N/A";
+
+        // Loading State
+        submitBtn.disabled = true;
+        btnText.style.display = "none";
+        btnSpinner.style.display = "inline-block";
+        clearAlert();
+
+        try {
+            let responseData = null;
+
+            if (isDemoMode || !apiUrl) {
+                // Mock execution for instant testing without server
+                await new Promise(r => setTimeout(r, 600)); // simulated latency
+                const token = "ES5-" + (demoStore.counter++);
+                demoStore.tokens[token] = {
+                    name,
+                    email,
+                    phone,
+                    membershipStatus,
+                    ieeeId,
+                    claimed: false,
+                    claimedAt: null
+                };
+                responseData = {
+                    status: "success",
+                    token: token,
+                    name: name,
+                    email: email,
+                    emailSent: true,
+                    message: "Coupon issued in Demo Mode!"
+                };
+            } else {
+                // Real POST to Google Apps Script Web App
+                const payload = {
+                    action: "issue",
+                    name,
+                    email,
+                    phone,
+                    membershipStatus,
+                    ieeeId
+                };
+
+                const res = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify(payload),
+                    redirect: "follow"
+                });
+
+                responseData = await res.json();
+            }
+
+            if (responseData.status === "success") {
+                showTicket(responseData.token, name, membershipStatus, email);
+            } else if (responseData.status === "already_registered") {
+                showAlert("warning", `⚠️ Participant is already registered with Token: <strong>${responseData.token}</strong>`);
+                showTicket(responseData.token, responseData.name, "Already Registered", email);
+            } else {
+                showAlert("danger", responseData.message || "Failed to issue coupon. Please check backend.");
+            }
+
+        } catch (err) {
+            console.error("Submission Error:", err);
+            let detail = "Could not connect to Google Apps Script.";
+            if (err.message && err.message.includes("Failed to fetch")) {
+                detail = "Access Blocked (CORS): Ensure your Apps Script Web App has <strong>'Who has access' set to 'Anyone'</strong> and <strong>'Execute as: Me'</strong>.";
+            }
+            showAlert("danger", `<div><strong>Connection Error:</strong> ${detail}</div><div class="mt-1 small text-light opacity-75">Check 'Backend Setup' > 'Test Connection' for details.</div>`);
+        } finally {
+            submitBtn.disabled = false;
+            btnText.style.display = "inline-block";
+            btnSpinner.style.display = "none";
+        }
+    });
+
+    // Render Digital Ticket
+    function showTicket(token, name, status, email) {
+        document.getElementById("couponForm").style.display = "none";
+        const ticketDisplay = document.getElementById("ticketDisplay");
+        ticketDisplay.style.display = "block";
+
+        document.getElementById("ticketParticipantName").textContent = name;
+        document.getElementById("ticketParticipantInfo").textContent = `${status} • ${email}`;
+        document.getElementById("ticketTokenCode").textContent = token;
+
+        // Render QR Code inside wrapper
+        const qrContainer = document.getElementById("qrcodeCanvas");
+        qrContainer.innerHTML = "";
+        new QRCode(qrContainer, {
+            text: token,
+            width: 170,
+            height: 170,
+            colorDark: "#0f172a",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+
+    // Reset Form for Next Participant (Keyboard Accessible)
+    function resetForNextParticipant() {
+        document.getElementById("couponForm").reset();
+        toggleIeeeId(false);
+        document.getElementById("statusNonMember").checked = true;
+
+        document.getElementById("ticketDisplay").style.display = "none";
+        document.getElementById("couponForm").style.display = "block";
+        clearAlert();
+
+        const nameInput = document.getElementById("name");
+        nameInput.focus();
+    }
+
+    // Global Enter key handler for instant next
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && document.getElementById("ticketDisplay").style.display === "block") {
+            resetForNextParticipant();
+        }
+    });
+
+    // Copy Token to Clipboard
+    function copyToken() {
+        const token = document.getElementById("ticketTokenCode").textContent.trim();
+        navigator.clipboard.writeText(token).then(() => {
+            showAlert("success", `Copied "${token}" to clipboard!`);
+        });
+    }
+
+    // ============================================================
+    // VERIFICATION SYSTEM (FOOD COUNTER)
+    // ============================================================
+
+    // Manual Token Input
+    function verifyManualToken() {
+        const tokenInput = document.getElementById("manualTokenInput");
+        const token = tokenInput.value.trim().toUpperCase();
+        if (!token) {
+            showAlert("warning", "Please enter a token code to verify.");
+            return;
+        }
+        performVerification(token);
+    }
+
+    // Perform Verification
+    async function performVerification(token) {
+        const resultDisplay = document.getElementById("verifyResultDisplay");
+        resultDisplay.style.display = "block";
+        resultDisplay.className = "verify-result-card verify-unclaimed";
+        resultDisplay.innerHTML = `<div class="py-3"><i class="fas fa-spinner fa-spin fa-2x text-info"></i><div class="mt-2 text-white">Verifying token ${token}...</div></div>`;
+
+        try {
+            let resData = null;
+
+            if (isDemoMode || !apiUrl) {
+                await new Promise(r => setTimeout(r, 400));
+                const record = demoStore.tokens[token];
+                if (record) {
+                    resData = {
+                        status: "found",
+                        token: token,
+                        name: record.name,
+                        email: record.email,
+                        phone: record.phone,
+                        membershipStatus: record.membershipStatus,
+                        claimed: record.claimed,
+                        claimedAt: record.claimedAt
+                    };
                 } else {
-                    $(this).css('border-color', '#00b894');
+                    resData = { status: "not_found", message: "Token not found in database." };
                 }
-            });
-            
-            // Email validation
-            $('#email').on('blur', function() {
-                const email = $(this).val();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (email && !emailRegex.test(email)) {
-                    $(this).css('border-color', '#e17055');
-                    showAlert('warning', 'Please enter a valid email address.');
-                } else if (email) {
-                    $(this).css('border-color', '#00b894');
+            } else {
+                const res = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify({ action: "verify", token }),
+                    redirect: "follow"
+                });
+                resData = await res.json();
+            }
+
+            renderVerificationResult(resData, token);
+
+        } catch (err) {
+            console.error("Verification error:", err);
+            resultDisplay.className = "verify-result-card verify-notfound";
+            resultDisplay.innerHTML = `
+                <div class="text-warning mb-2"><i class="fas fa-exclamation-triangle fa-2x"></i></div>
+                <h5 class="text-white">Verification Failed</h5>
+                <p class="text-muted small">Could not connect to database. Ensure Web App access is set to 'Anyone'.</p>
+            `;
+        }
+    }
+
+    // Render Verification Result Card
+    function renderVerificationResult(data, token) {
+        const resultDisplay = document.getElementById("verifyResultDisplay");
+
+        if (data.status === "found") {
+            if (!data.claimed) {
+                // UNCLAIMED - CAN REDEEM
+                resultDisplay.className = "verify-result-card verify-unclaimed";
+                resultDisplay.innerHTML = `
+                    <div class="status-pill pill-green"><i class="fas fa-check-circle"></i> VALID - NOT CLAIMED</div>
+                    <h3 class="text-white mb-1 font-monospace">${data.token}</h3>
+                    <h4 class="text-white mb-1">${data.name}</h4>
+                    <p class="text-secondary small mb-3">${data.membershipStatus} • ${data.phone}</p>
+                    
+                    <button class="btn btn-action-primary" id="btnClaimMeal" onclick="claimMeal('${data.token}')">
+                        <i class="fas fa-utensils"></i> Redeem / Claim Meal
+                    </button>
+                `;
+            } else {
+                // ALREADY CLAIMED - WARNING!
+                resultDisplay.className = "verify-result-card verify-claimed";
+                resultDisplay.innerHTML = `
+                    <div class="status-pill pill-red"><i class="fas fa-ban"></i> ALREADY CLAIMED</div>
+                    <h3 class="text-white mb-1 font-monospace">${data.token}</h3>
+                    <h4 class="text-white mb-1">${data.name}</h4>
+                    <div class="alert alert-danger bg-dark border-danger text-light py-2 px-3 my-2 small rounded-3">
+                        <i class="fas fa-exclamation-circle text-danger me-1"></i>
+                        <strong>Duplicate Warning:</strong> Meal was already claimed on <strong>${data.claimedAt || "earlier today"}</strong>.
+                    </div>
+                    <button class="btn btn-action-secondary mt-2" onclick="clearVerifyResult()">
+                        <i class="fas fa-redo"></i> Scan Next
+                    </button>
+                `;
+            }
+        } else {
+            // NOT FOUND
+            resultDisplay.className = "verify-result-card verify-notfound";
+            resultDisplay.innerHTML = `
+                <div class="status-pill pill-yellow"><i class="fas fa-question-circle"></i> NOT FOUND</div>
+                <h4 class="text-white mb-1 font-monospace">${token}</h4>
+                <p class="text-muted small mb-3">This token does not exist in the Ensemble 5.0 database.</p>
+                <button class="btn btn-action-secondary" onclick="clearVerifyResult()">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            `;
+        }
+    }
+
+    // Claim Meal Action
+    async function claimMeal(token) {
+        const claimBtn = document.getElementById("btnClaimMeal");
+        if (claimBtn) {
+            claimBtn.disabled = true;
+            claimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redeeming...';
+        }
+
+        try {
+            let resData = null;
+
+            if (isDemoMode || !apiUrl) {
+                await new Promise(r => setTimeout(r, 400));
+                if (demoStore.tokens[token]) {
+                    demoStore.tokens[token].claimed = true;
+                    demoStore.tokens[token].claimedAt = new Date().toLocaleTimeString();
+                    resData = { status: "success", message: "Meal redeemed!", token, name: demoStore.tokens[token].name, claimedAt: demoStore.tokens[token].claimedAt };
                 }
-            });
-            
-            // Phone validation
-            $('#phone').on('input', function() {
-                let value = $(this).val().replace(/\D/g, '');
-                if (value.length > 10) {
-                    value = value.substring(0, 10);
-                }
-                if (value.length === 10) {
-                    $(this).val('+91 ' + value.substring(0, 5) + ' ' + value.substring(5));
-                    $(this).css('border-color', '#00b894');
-                }
-            });
-            
-            // IEEE ID validation
-            $('#ieeeId').on('blur', function() {
-                const ieeeId = $(this).val();
-                if (ieeeId && ieeeId.length < 8) {
-                    $(this).css('border-color', '#e17055');
-                    showAlert('warning', 'Please enter a valid IEEE Membership ID.');
-                } else if (ieeeId) {
-                    $(this).css('border-color', '#00b894');
-                }
-            });
+            } else {
+                const res = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify({ action: "claim", token }),
+                    redirect: "follow"
+                });
+                resData = await res.json();
+            }
+
+            if (resData.status === "success") {
+                const resultDisplay = document.getElementById("verifyResultDisplay");
+                resultDisplay.className = "verify-result-card verify-unclaimed";
+                resultDisplay.innerHTML = `
+                    <div class="status-pill pill-green"><i class="fas fa-check-double"></i> MEAL REDEEMED SUCCESSFULLY!</div>
+                    <h3 class="text-white mb-1 font-monospace">${token}</h3>
+                    <h4 class="text-white mb-1">${resData.name || ""}</h4>
+                    <p class="text-success small mb-3">Claimed at: ${resData.claimedAt || "Just now"}</p>
+                    <button class="btn btn-action-primary" onclick="clearVerifyResult()">
+                        <i class="fas fa-check"></i> Next Scan
+                    </button>
+                `;
+            } else {
+                showAlert("danger", resData.message || "Could not claim meal.");
+            }
+
+        } catch (err) {
+            console.error("Claim error:", err);
+            showAlert("danger", "Failed to mark as claimed due to network error.");
+        }
+    }
+
+    function clearVerifyResult() {
+        document.getElementById("verifyResultDisplay").style.display = "none";
+        document.getElementById("manualTokenInput").value = "";
+        document.getElementById("manualTokenInput").focus();
+    }
+
+    // Camera QR Code Scanner Toggle
+    function toggleCameraScanner() {
+        if (isScanning) {
+            stopCameraScanner();
+        } else {
+            startCameraScanner();
+        }
+    }
+
+    function startCameraScanner() {
+        const qrContainer = document.getElementById("qr-reader");
+        qrContainer.style.display = "block";
+        document.getElementById("cameraBtnText").textContent = "Stop Camera Scanner";
+
+        html5QrScanner = new Html5Qrcode("qr-reader");
+        html5QrScanner.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: { width: 250, height: 250 }
+            },
+            (decodedText) => {
+                // Audio chime feedback if supported
+                stopCameraScanner();
+                document.getElementById("manualTokenInput").value = decodedText;
+                performVerification(decodedText);
+            },
+            (errorMessage) => {
+                // Parsing frame (no action needed)
+            }
+        ).then(() => {
+            isScanning = true;
+        }).catch(err => {
+            console.error("Camera start error:", err);
+            showAlert("warning", "Camera access denied or unavailable. Please use manual token input.");
+            qrContainer.style.display = "none";
+            document.getElementById("cameraBtnText").textContent = "Start Camera Scanner";
         });
-        
-        // Animate elements on load
-        $(document).ready(function() {
-            $('.registration-container').css({
-                'opacity': '0',
-                'transform': 'translateY(30px)'
-            }).animate({
-                'opacity': '1'
-            }, 600).css('transform', 'translateY(0)');
-        });
-    </script>
+    }
+
+    function stopCameraScanner() {
+        if (html5QrScanner && isScanning) {
+            html5QrScanner.stop().then(() => {
+                document.getElementById("qr-reader").style.display = "none";
+                document.getElementById("cameraBtnText").textContent = "Start Camera Scanner";
+                isScanning = false;
+            }).catch(err => console.error("Camera stop error:", err));
+        }
+    }
+
+    // Alert Notification Helpers
+    function showAlert(type, message) {
+        const box = document.getElementById("alertBox");
+        box.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show bg-dark border-${type} text-light small py-2 px-3 rounded-3" role="alert">
+                ${message}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+    }
+
+    function clearAlert() {
+        document.getElementById("alertBox").innerHTML = "";
+    }
+</script>
 
 </body>
 </html>
