@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ensemble 5.0 - Food Coupon & Verification Portal</title>
     
-    <!-- Google Fonts: Outfit -->
+    <!-- Google Fonts: Bebas Neue (Title) & Montserrat / Space Grotesk (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,21 +20,31 @@
 
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #e84393 0%, #6c5ce7 50%, #00cec9 100%);
-            --accent-pink: #e84393;
-            --accent-purple: #a29bfe;
-            --accent-cyan: #00cec9;
-            --accent-green: #00b894;
-            --accent-red: #d63031;
-            --dark-card: rgba(15, 23, 42, 0.92);
-            --border-glass: rgba(255, 255, 255, 0.12);
+            /* Ensemble 5.0 Poster Design System */
+            --poster-crimson: #a31d24;
+            --poster-dark-crimson: #801319;
+            --poster-crimson-glow: rgba(163, 29, 36, 0.4);
+            --poster-paper-bg: #e6e3dc;
+            --poster-charcoal: #121417;
+            --poster-card-bg: #181c20;
+            --poster-card-surface: #22272e;
+            --poster-border: rgba(163, 29, 36, 0.35);
+            --poster-gold-pill: #a31d24;
+            --accent-green: #2ecc71;
+            --accent-red: #e74c3c;
+            --text-light: #f5f6fa;
+            --text-muted: #9ba4b4;
         }
 
         body {
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a162b 100%);
+            background-color: #0d0f12;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(163, 29, 36, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(163, 29, 36, 0.15) 0%, transparent 50%),
+                linear-gradient(180deg, #101316 0%, #0a0b0d 100%);
             min-height: 100vh;
-            font-family: 'Outfit', sans-serif;
-            color: #f1f2f6;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
             margin: 0;
             padding: 20px 0 60px;
         }
@@ -42,12 +52,12 @@
         .main-card {
             max-width: 580px;
             margin: 1rem auto;
-            background: var(--dark-card);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+            background: rgba(22, 26, 31, 0.95);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
             padding: 2.2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-glass);
-            border: 1px solid var(--border-glass);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--poster-border), 0 0 35px rgba(163, 29, 36, 0.15);
+            border: 1px solid var(--poster-border);
             transition: all 0.3s ease;
         }
 
@@ -59,99 +69,154 @@
 
         .ieee-logo-badge {
             display: inline-block;
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #a29bfe;
-            background: rgba(162, 155, 254, 0.1);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            color: #ffffff;
+            background: var(--poster-crimson);
             padding: 4px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(162, 155, 254, 0.2);
+            border-radius: 6px;
             margin-bottom: 0.6rem;
             text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(163, 29, 36, 0.35);
         }
 
         .event-title {
-            font-size: 2.6rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #fd79a8, #a29bfe, #00cec9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.2rem;
-            letter-spacing: -0.5px;
+            font-family: 'Bebas Neue', 'Outfit', sans-serif;
+            font-size: 3.8rem;
+            line-height: 0.95;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(163, 29, 36, 0.4);
         }
 
-        .event-subtitle {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            font-weight: 400;
-            margin: 0;
+        .event-title span.accent-red {
+            color: #d63031;
+            background: linear-gradient(135deg, #e74c3c, #a31d24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .event-tagline {
+            color: #d63031;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .event-info-pill-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.4rem;
+        }
+
+        .poster-pill-red {
+            background: var(--poster-crimson);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(163, 29, 36, 0.35);
+        }
+
+        .poster-pill-white {
+            background: #ffffff;
+            color: var(--poster-charcoal);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+
+        .poster-pill-outline {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
         }
 
         /* Mode Selector Tabs */
         .nav-volunteer-tabs {
             display: flex;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 6px;
-            border-radius: 16px;
-            border: 1px solid var(--border-glass);
-            margin-bottom: 2rem;
+            background: rgba(14, 17, 20, 0.75);
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 1.8rem;
             gap: 6px;
         }
 
         .nav-volunteer-tab {
             flex: 1;
-            padding: 10px 14px;
+            padding: 11px 14px;
             border: none;
             background: transparent;
-            color: #94a3b8;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border-radius: 12px;
-            transition: all 0.25s ease;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            text-transform: uppercase;
         }
 
         .nav-volunteer-tab.active {
-            background: linear-gradient(135deg, #e84393, #6c5ce7);
+            background: var(--poster-crimson);
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(232, 67, 147, 0.35);
+            box-shadow: 0 4px 14px rgba(163, 29, 36, 0.4);
         }
 
         /* Form Inputs */
         .form-label {
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: #cbd5e1;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #e2e8f0;
             margin-bottom: 0.4rem;
+            text-transform: uppercase;
         }
 
         .required-star {
-            color: #fd79a8;
+            color: #ff7675;
         }
 
         .form-control, .form-select {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
+            background: rgba(15, 18, 22, 0.8);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             padding: 0.75rem 1rem;
             color: #ffffff;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             transition: all 0.2s ease;
         }
 
         .form-control:focus, .form-select:focus {
-            background: rgba(30, 41, 59, 0.95);
-            border-color: #00cec9;
-            box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.2);
+            background: rgba(18, 22, 28, 0.95);
+            border-color: var(--poster-crimson);
+            box-shadow: 0 0 0 3px rgba(163, 29, 36, 0.25);
             color: #ffffff;
         }
 
         .form-control::placeholder {
-            color: #64748b;
+            color: #636e72;
         }
 
         /* Custom Radio Group */
@@ -165,12 +230,14 @@
             display: block;
             text-align: center;
             padding: 10px;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #94a3b8;
-            font-weight: 500;
-            font-size: 0.9rem;
+            background: rgba(18, 22, 28, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -180,90 +247,99 @@
         }
 
         .radio-pills input[type="radio"]:checked + .radio-pill-label {
-            background: rgba(108, 92, 231, 0.25);
-            border-color: #a29bfe;
+            background: rgba(163, 29, 36, 0.2);
+            border-color: var(--poster-crimson);
             color: #ffffff;
-            font-weight: 600;
-            box-shadow: 0 0 12px rgba(162, 155, 254, 0.25);
+            font-weight: 700;
+            box-shadow: 0 0 14px rgba(163, 29, 36, 0.3);
         }
 
         /* Primary Action Buttons */
         .btn-action-primary {
-            background: linear-gradient(135deg, #e84393 0%, #6c5ce7 100%);
-            border: none;
-            padding: 0.85rem 1.8rem;
-            border-radius: 14px;
+            background: linear-gradient(135deg, #a31d24 0%, #801319 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.88rem 1.8rem;
+            border-radius: 10px;
             color: white;
-            font-weight: 700;
-            font-size: 1.05rem;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             width: 100%;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 6px 20px rgba(232, 67, 147, 0.3);
+            box-shadow: 0 6px 20px rgba(163, 29, 36, 0.4);
         }
 
         .btn-action-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #bd212a 0%, #95161d 100%);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(232, 67, 147, 0.45);
+            box-shadow: 0 10px 25px rgba(163, 29, 36, 0.55);
             color: white;
         }
 
         .btn-action-primary:disabled {
-            opacity: 0.65;
+            opacity: 0.6;
             cursor: not-allowed;
         }
 
         .btn-action-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #f1f2f6;
             padding: 0.75rem 1.5rem;
-            border-radius: 14px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             transition: all 0.2s ease;
             width: 100%;
         }
 
         .btn-action-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             color: #ffffff;
         }
 
         /* Digital Ticket Confirmation */
         .ticket-card {
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            border: 2px solid rgba(0, 206, 201, 0.4);
-            border-radius: 20px;
+            background: #14181c;
+            border: 2px solid var(--poster-crimson);
+            border-radius: 16px;
             padding: 2rem 1.5rem;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(163, 29, 36, 0.2);
             animation: fadeInScale 0.35s ease-out;
+            position: relative;
         }
 
         .ticket-badge {
             display: inline-block;
-            background: rgba(0, 184, 148, 0.15);
-            color: #00cec9;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            background: var(--poster-crimson);
+            color: #ffffff;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             margin-bottom: 0.8rem;
         }
 
         .ticket-token {
-            font-size: 2.3rem;
-            font-weight: 800;
-            letter-spacing: 3px;
+            font-family: 'Bebas Neue', 'Outfit', monospace;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 4px;
             color: #ffffff;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px dashed rgba(0, 206, 201, 0.5);
-            padding: 0.7rem 1.5rem;
-            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1.5px dashed var(--poster-crimson);
+            padding: 0.6rem 1.5rem;
+            border-radius: 10px;
             display: inline-block;
             margin: 0.6rem 0;
             cursor: pointer;
@@ -271,21 +347,23 @@
         }
 
         .ticket-token:hover {
-            background: rgba(0, 206, 201, 0.15);
+            background: rgba(163, 29, 36, 0.2);
+            border-color: #ff7675;
         }
 
         .qr-wrapper {
             background: #ffffff;
             padding: 14px;
-            border-radius: 16px;
+            border-radius: 12px;
             display: inline-block;
             margin: 1.2rem auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--poster-crimson);
         }
 
         /* Verification Results Card */
         .verify-result-card {
-            border-radius: 18px;
+            border-radius: 14px;
             padding: 1.6rem;
             margin-top: 1.5rem;
             text-align: center;
@@ -293,64 +371,65 @@
         }
 
         .verify-unclaimed {
-            background: rgba(0, 184, 148, 0.12);
-            border: 2px solid #00b894;
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid #2ecc71;
         }
 
         .verify-claimed {
-            background: rgba(214, 48, 49, 0.15);
-            border: 2px solid #d63031;
+            background: rgba(231, 76, 60, 0.15);
+            border: 2px solid #e74c3c;
         }
 
         .verify-notfound {
-            background: rgba(253, 203, 110, 0.12);
-            border: 2px solid #fdcb6e;
+            background: rgba(241, 196, 15, 0.12);
+            border: 2px solid #f1c40f;
         }
 
         .status-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             padding: 6px 14px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             margin-bottom: 0.8rem;
         }
 
         .pill-green {
-            background: #00b894;
+            background: #27ae60;
             color: #ffffff;
         }
 
         .pill-red {
-            background: #d63031;
+            background: #c0392b;
             color: #ffffff;
         }
 
         .pill-yellow {
-            background: #fdcb6e;
-            color: #2d3436;
+            background: #d35400;
+            color: #ffffff;
         }
 
         /* Camera Scanner Box */
         #qr-reader {
             width: 100%;
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed var(--poster-crimson);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         #qr-reader__scan_region {
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         /* Quick Settings & Status bar */
         .config-badge {
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: var(--text-muted);
             cursor: pointer;
             text-decoration: underline;
             transition: color 0.2s;
@@ -377,16 +456,24 @@
 <div class="container">
     <div class="main-card">
         
-        <!-- Header -->
+        <!-- Header with Poster Design Language -->
         <div class="portal-header">
-            <div class="d-flex justify-content-between align-items-center mb-1">
-                <span class="ieee-logo-badge"><i class="fas fa-bolt"></i> IEEE SCT SB</span>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="ieee-logo-badge">IEEE SCT SB presents</span>
                 <span class="config-badge" data-bs-toggle="modal" data-bs-target="#settingsModal">
                     <i class="fas fa-cog"></i> Backend Setup
                 </span>
             </div>
-            <h1 class="event-title">Ensemble 5.0</h1>
-            <p class="event-subtitle">Official Volunteer Food Coupon & Verification Portal</p>
+            
+            <h1 class="event-title">ENSEMBLE <span class="accent-red">5.0</span></h1>
+            <div class="event-tagline">Celebrate &bull; Connect &bull; Empower</div>
+
+            <!-- Event Details Pills from Poster -->
+            <div class="event-info-pill-bar">
+                <span class="poster-pill-red"><i class="fas fa-map-marker-alt me-1"></i> Seminar Hall (112)</span>
+                <span class="poster-pill-white"><i class="far fa-calendar-alt me-1"></i> 20th Sept</span>
+                <span class="poster-pill-outline"><i class="fas fa-id-card me-1"></i> Exclusive to IEEE Members</span>
+            </div>
         </div>
 
         <!-- Mode Tabs -->

@@ -323,30 +323,38 @@ function sendCouponEmail(email, name, token) {
   var qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(token);
   
   var htmlBody = ""
-    + '<div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #e1e8ed; border-radius: 12px; overflow: hidden; background: #ffffff;">'
-    + '  <div style="background: linear-gradient(135deg, #e84393 0%, #6c5ce7 100%); padding: 24px; text-align: center; color: #ffffff;">'
-    + '    <h3 style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">IEEE SCT SB PRESENTS</h3>'
-    + '    <h1 style="margin: 8px 0; font-size: 28px; font-weight: bold; letter-spacing: 1px;">Ensemble 5.0</h1>'
-    + '    <p style="margin: 0; font-size: 13px; opacity: 0.9;">Official Food Coupon Pass</p>'
+    + '<div style="font-family: Arial, Helvetica, sans-serif; max-width: 520px; margin: auto; border: 2px solid #a31d24; border-radius: 12px; overflow: hidden; background-color: #f7f5f0; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">'
+    // Top Crimson Header
+    + '  <div style="background-color: #a31d24; background: linear-gradient(135deg, #a31d24 0%, #801319 100%); padding: 22px 20px; text-align: center; color: #ffffff;">'
+    + '    <div style="font-size: 11px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; opacity: 0.95; margin-bottom: 4px;">IEEE SCT SB presents</div>'
+    + '    <h1 style="margin: 0; font-size: 34px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; font-family: Impact, Arial Black, sans-serif;">ENSEMBLE 5.0</h1>'
+    + '    <div style="font-size: 11px; font-weight: bold; letter-spacing: 2.5px; text-transform: uppercase; margin-top: 6px; opacity: 0.9;">Celebrate &bull; Connect &bull; Empower</div>'
     + '  </div>'
-    + '  <div style="padding: 24px; text-align: center;">'
-    + '    <p style="font-size: 15px; color: #2d3436; margin-top: 0;">Hello <strong>' + escapeHtml(name) + '</strong>,</p>'
-    + '    <p style="font-size: 13px; color: #636e72; line-height: 1.5;">Here is your official meal pass for Ensemble 5.0. Present this QR code or Token ID at the food counter.</p>'
-    + '    <div style="margin: 20px auto; padding: 16px; background: #f8f9fa; border-radius: 10px; display: inline-block;">'
-    + '      <img src="' + qrCodeUrl + '" alt="QR Code" width="180" height="180" style="display: block; margin: auto; border-radius: 8px; border: 1px solid #ddd;" />'
-    + '      <div style="margin-top: 12px; font-size: 22px; font-weight: bold; letter-spacing: 2px; color: #2d3436; background: #e0f2fe; padding: 6px 12px; border-radius: 6px;">'
+    // Event Details Bar
+    + '  <div style="background-color: #1e2227; padding: 10px 16px; text-align: center; color: #ffffff; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">'
+    + '    <span style="background-color: #a31d24; padding: 3px 10px; border-radius: 4px; margin-right: 6px;">SEMINAR HALL (112)</span>'
+    + '    <span style="background-color: #ffffff; color: #1e2227; padding: 3px 10px; border-radius: 4px; margin-right: 6px;">20TH SEPT</span>'
+    + '    <span style="border: 1px solid #7f8c8d; color: #bdc3c7; padding: 2px 8px; border-radius: 4px;">EXCLUSIVE TO IEEE MEMBERS</span>'
+    + '  </div>'
+    // Body Content
+    + '  <div style="padding: 24px 20px; text-align: center; color: #2d3436;">'
+    + '    <p style="font-size: 16px; margin: 0 0 8px; color: #1e2227;">Hello <strong>' + escapeHtml(name) + '</strong>,</p>'
+    + '    <p style="font-size: 13px; color: #555555; line-height: 1.5; margin: 0 0 18px;">Here is your official meal pass for <strong>Ensemble 5.0</strong>. Please present this QR code or Token ID at the food counter.</p>'
+    // QR Code Container
+    + '    <div style="margin: 0 auto 16px; padding: 16px; background-color: #ffffff; border: 2px solid #a31d24; border-radius: 10px; display: inline-block; box-shadow: 0 4px 12px rgba(163,29,36,0.15);">'
+    + '      <img src="' + qrCodeUrl + '" alt="QR Code" width="180" height="180" style="display: block; margin: auto; border-radius: 6px;" />'
+    + '      <div style="margin-top: 12px; font-size: 26px; font-weight: 900; letter-spacing: 4px; color: #a31d24; background-color: #fdf2f2; border: 1.5px dashed #a31d24; padding: 6px 14px; border-radius: 6px; font-family: Impact, Arial Black, monospace;">'
     +          escapeHtml(token)
     + '      </div>'
     + '    </div>'
-    + '    <div style="background: #fff3cd; color: #856404; padding: 12px; border-radius: 8px; font-size: 12px; margin-top: 15px; text-align: left;">'
-    + '      <strong>⚠️ Note:</strong>'
-    + '      <ul style="margin: 5px 0 0 18px; padding: 0;">'
-    + '        <li>This coupon is valid for a <strong>single meal redemption</strong> only.</li>'
-    + '        <li>Once scanned at the food counter, the pass cannot be reused.</li>'
-    + '      </ul>'
+    // Event Theme Note
+    + '    <div style="background-color: #a31d24; color: #ffffff; border-radius: 8px; padding: 12px 14px; margin-top: 10px; text-align: left; font-size: 12px; line-height: 1.5;">'
+    + '      <div style="font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Honouring Memories, Celebrating Journeys.</div>'
+    + '      <div style="opacity: 0.95;">This pass is valid for <strong>one-time lunch redemption</strong> only. Once scanned by the volunteer at the food counter, it cannot be reused.</div>'
     + '    </div>'
     + '  </div>'
-    + '  <div style="background: #f1f2f6; padding: 14px; text-align: center; font-size: 11px; color: #747d8c;">'
+    // Footer
+    + '  <div style="background-color: #1a1d20; padding: 14px; text-align: center; font-size: 11px; color: #95a5a6; letter-spacing: 0.5px;">'
     + '    IEEE SCT SB &bull; Ensemble 5.0 &bull; Food Distribution Portal'
     + '  </div>'
     + '</div>';
