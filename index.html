@@ -454,15 +454,55 @@
 <body>
 
 <div class="container">
-    <div class="main-card">
+    <!-- AUTHENTICATION GATE SCREEN -->
+    <div class="main-card" id="loginCard" style="max-width: 440px; margin: 3rem auto;">
+        <div class="portal-header text-center mb-4">
+            <span class="ieee-logo-badge mb-2">IEEE SCT SB</span>
+            <h1 class="event-title mb-1" style="font-size: 3rem;">ENSEMBLE <span class="accent-red">5.0</span></h1>
+            <div class="event-tagline mb-3">Volunteer Portal Access</div>
+            <p class="text-secondary small">Please enter volunteer credentials to access the food coupon & verification system.</p>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="mb-3">
+                <label for="loginUser" class="form-label">User ID</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-secondary text-light"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="loginUser" placeholder="Enter User ID" required autocomplete="username">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="loginPass" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-secondary text-light"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="loginPass" placeholder="Enter Password" required autocomplete="current-password">
+                </div>
+            </div>
+
+            <div id="loginErrorBox" class="mb-3" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-action-primary">
+                <i class="fas fa-sign-in-alt"></i> Login to Portal
+            </button>
+        </form>
+    </div>
+
+    <!-- MAIN VOLUNTEER PORTAL (Protected) -->
+    <div class="main-card" id="portalCard" style="display: none;">
         
         <!-- Header with Poster Design Language -->
         <div class="portal-header">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="ieee-logo-badge">IEEE SCT SB presents</span>
-                <span class="config-badge" data-bs-toggle="modal" data-bs-target="#settingsModal">
-                    <i class="fas fa-cog"></i> Backend Setup
-                </span>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="config-badge" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                        <i class="fas fa-cog"></i> Backend Setup
+                    </span>
+                    <span class="config-badge text-danger" style="text-decoration: none;" onclick="handleLogout()" title="Log out">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </span>
+                </div>
             </div>
             
             <h1 class="event-title">ENSEMBLE <span class="accent-red">5.0</span></h1>
@@ -641,6 +681,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    // Authentication Configuration & Session State
+    const AUTH_USER = "ensemble";
+    const AUTH_PASS = "pookievaishnav";
+    const STORAGE_KEY_AUTH = "ENSEMBLE5_AUTH_SESSION";
+
     // Configuration & State
     const STORAGE_KEY_API_URL = "ENSEMBLE5_API_URL";
     const STORAGE_KEY_DEMO_MODE = "ENSEMBLE5_DEMO_MODE";
@@ -668,18 +713,73 @@
     let html5QrScanner = null;
     let isScanning = false;
 
-    // Initialize UI on load
+    // Check Authentication on Page Load
     document.addEventListener("DOMContentLoaded", () => {
+        const isAuth = sessionStorage.getItem(STORAGE_KEY_AUTH) === "true" || localStorage.getItem(STORAGE_KEY_AUTH) === "true";
+        if (isAuth) {
+            unlockPortal();
+        } else {
+            lockPortal();
+        }
+    });
+
+    function handleLogin(e) {
+        e.preventDefault();
+        const userInput = document.getElementById("loginUser").value.trim();
+        const passInput = document.getElementById("loginPass").value;
+        const errBox = document.getElementById("loginErrorBox");
+
+        if (userInput === AUTH_USER && passInput === AUTH_PASS) {
+            sessionStorage.setItem(STORAGE_KEY_AUTH, "true");
+            localStorage.setItem(STORAGE_KEY_AUTH, "true");
+            unlockPortal();
+        } else {
+            errBox.style.display = "block";
+            errBox.innerHTML = `
+                <div class="alert alert-danger py-2 px-3 small rounded-3 bg-dark border-danger text-light mb-0">
+                    <i class="fas fa-exclamation-triangle text-danger me-1"></i>
+                    <strong>Access Denied:</strong> Invalid User ID or Password.
+                </div>
+            `;
+            document.getElementById("loginPass").value = "";
+            document.getElementById("loginPass").focus();
+        }
+    }
+
+    function unlockPortal() {
+        document.getElementById("loginCard").style.display = "none";
+        document.getElementById("portalCard").style.display = "block";
+
         document.getElementById("apiUrlInput").value = apiUrl;
         document.getElementById("demoModeSwitch").checked = isDemoMode;
         
         // Auto-focus Name field
-        document.getElementById("name").focus();
+        setTimeout(() => {
+            const nameEl = document.getElementById("name");
+            if (nameEl) nameEl.focus();
+        }, 100);
 
         if (!apiUrl && !isDemoMode) {
             showAlert("info", "Welcome! Please configure your Google Apps Script URL in 'Backend Setup' or enable Demo Mode to test.");
         }
-    });
+    }
+
+    function lockPortal() {
+        if (isScanning) stopCameraScanner();
+        document.getElementById("loginCard").style.display = "block";
+        document.getElementById("portalCard").style.display = "none";
+        document.getElementById("loginUser").focus();
+    }
+
+    function handleLogout() {
+        if (confirm("Are you sure you want to log out of the volunteer portal?")) {
+            sessionStorage.removeItem(STORAGE_KEY_AUTH);
+            localStorage.removeItem(STORAGE_KEY_AUTH);
+            document.getElementById("loginForm").reset();
+            document.getElementById("loginErrorBox").style.display = "none";
+            lockPortal();
+        }
+    }
 
     // Validate Apps Script Web App URL format
     function validateApiUrl(url) {
