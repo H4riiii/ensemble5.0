@@ -161,17 +161,35 @@ function handleIssueCoupon(data) {
       }
     }
 
-    // Generate next serial token
-    var token = TOKEN_PREFIX + (START_TOKEN_NUMBER + Math.max(0, lastRow - 1));
+    // Collect all existing tokens in the sheet to prevent any random collisions
+    var existingTokensSet = {};
+    if (lastRow > 1) {
+      var allTokensData = sheet.getRange(2, 2, lastRow - 1, 1).getValues();
+      for (var k = 0; k < allTokensData.length; k++) {
+        var t = String(allTokensData[k][0]).trim().toUpperCase();
+        if (t) existingTokensSet[t] = true;
+      }
+    }
+
+    // Generate a unique random 4-digit token between 1000 and 9999
+    var token = "";
+    var maxAttempts = 1000;
+    var attempt = 0;
+    do {
+      var randomNum = Math.floor(Math.random() * 9000) + 1000; // 1000 to 9999
+      token = TOKEN_PREFIX + randomNum;
+      attempt++;
+    } while (existingTokensSet[token] && attempt < maxAttempts);
+
     var timestamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
 
-    // Append new participant row
+    // Append new participant row (prefix phone with ' to force plain text and prevent formula evaluation)
     sheet.appendRow([
       timestamp,
       token,
       name,
       email,
-      phone,
+      "'" + phone,
       membershipStatus,
       ieeeId,
       "NO", // Claimed Status

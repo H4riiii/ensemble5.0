@@ -747,7 +747,8 @@
             if (isDemoMode || !apiUrl) {
                 // Mock execution for instant testing without server
                 await new Promise(r => setTimeout(r, 600)); // simulated latency
-                const token = "ES5-" + (demoStore.counter++);
+                const randomNum = Math.floor(Math.random() * 9000) + 1000;
+                const token = "ES5-" + randomNum;
                 demoStore.tokens[token] = {
                     name,
                     email,
@@ -930,6 +931,9 @@
     function renderVerificationResult(data, token) {
         const resultDisplay = document.getElementById("verifyResultDisplay");
 
+        // Clean phone display if previously corrupted with #ERROR!
+        const cleanPhone = (data.phone && !data.phone.includes("ERROR")) ? ` • ${data.phone}` : "";
+
         if (data.status === "found") {
             if (!data.claimed) {
                 // UNCLAIMED - CAN REDEEM
@@ -938,7 +942,7 @@
                     <div class="status-pill pill-green"><i class="fas fa-check-circle"></i> VALID - NOT CLAIMED</div>
                     <h3 class="text-white mb-1 font-monospace">${data.token}</h3>
                     <h4 class="text-white mb-1">${data.name}</h4>
-                    <p class="text-secondary small mb-3">${data.membershipStatus} • ${data.phone}</p>
+                    <p class="text-secondary small mb-3">${data.membershipStatus}${cleanPhone}</p>
                     
                     <button class="btn btn-action-primary" id="btnClaimMeal" onclick="claimMeal('${data.token}')">
                         <i class="fas fa-utensils"></i> Redeem / Claim Meal
